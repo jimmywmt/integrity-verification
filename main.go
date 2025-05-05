@@ -21,11 +21,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	// 路徑請放在 /data 目錄下 (請在docker run 時掛載 /data 目錄)
 	binaryPath := os.Args[1]
 	token := tools.FileToken(binaryPath, Password, SaltHex)
-	// 將 token 寫入 /data/token.chk (請在docker run 時掛載 /data 目錄)
-	outputPath := "/data/token.chk"
+	outputPath := "./token.chk"
 	if err := os.WriteFile(outputPath, []byte(token), 0644); err != nil {
 		log.Fatalf("寫入 %s 失敗: %v", outputPath, err)
 	}
