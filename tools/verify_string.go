@@ -8,7 +8,7 @@ import (
 	"github.com/gtank/cryptopasta"
 )
 
-func VertifyString(input string, password string, saltHex string, token string) {
+func VerifyString(input string, password string, saltHex string, token string) {
 	sum := sha256.Sum256([]byte(input))
 	key := DeriveKey(password, saltHex)
 
