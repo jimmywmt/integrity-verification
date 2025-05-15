@@ -6,11 +6,13 @@ import (
 	"encoding/hex"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/gtank/cryptopasta"
 )
 
-func VerifySelf(password string, saltHex string, token string) {
+func VerifySelf(password string, saltHex string, token string, magicIndex *uint8) uint8 {
+	magicNumber := uint8(time.Now().UnixNano() % 256)
 	execPath, err := os.Executable()
 	if err != nil {
 		panic("failed to get executable path: " + err.Error())
@@ -42,4 +44,6 @@ func VerifySelf(password string, saltHex string, token string) {
 	if !bytes.Equal(sum[:], plaintext) {
 		panic("token does not match the file hash, file may have been tampered")
 	}
+	*magicIndex = *magicIndex ^ magicNumber
+	return magicNumber
 }
