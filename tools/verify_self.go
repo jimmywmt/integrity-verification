@@ -12,7 +12,7 @@ import (
 )
 
 func VerifySelf(password string, saltHex string, token string, magicIndex *uint8) uint8 {
-	magicNumber := uint8(time.Now().UnixNano() % 256)
+	magicNumber := uint8(time.Now().UnixNano()%255) + 1
 	execPath, err := os.Executable()
 	if err != nil {
 		panic("failed to get executable path: " + err.Error())
